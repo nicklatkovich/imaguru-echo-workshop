@@ -1,8 +1,22 @@
 @import "_connection";
+@import "_login";
 
 body {
 	margin: 0;
 	background-color: #303030;
 	color: #e8e8e8;
 	font-size: 32px;
+}
+
+button {
+	background-color: #606060;
+	border-radius: 16px;
+	color: white;
+	border-color: #909090;
+	border-style: solid;
+	width: 128px;
+	height: 32px;
+	&:focus { outline:none; }
+	&::-moz-focus-inner { border:0; }
+	cursor: pointer;
 }

@@ -1,0 +1,41 @@
+
+#login {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	#prk-input {
+		width: 384px;
+		margin: 32px;
+	}
+
+	#error, #processing {
+		position: fixed;
+		display: flex;
+		width: 100vw;
+		height: 100vh;
+		background-color: #0008;
+		justify-content: center;
+		align-items: center;
+		&>div {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			background-color: #303030;
+			padding: 64px;
+			border-radius: 128px;
+		}
+	}
+
+	#error {
+		color: #e83030;
+		button {
+			margin-top: 32px;
+			width: 128px;
+		}
+	}
+}
