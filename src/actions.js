@@ -23,7 +23,7 @@ export async function login(wif) {
 	return { id: Math.floor(Math.random() * 500), name: 'accountName' };
 }
 
-export async function send(privateKey, text) {
+export async function send(privateKey, userId, text) {
 	const hash = sha3(text);
 	console.log(hash);
 	await new Promise((resolve) => setTimeout(() => resolve(), 2000));

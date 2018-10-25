@@ -43,7 +43,7 @@ export default class App extends Component {
 						onClick={async () => {
 							this.setState({ message: 'Отправка хэша в блокчейн...' });
 							try {
-								await send(this.state.privateKey, this.textarea.value);
+								await send(this.state.privateKey, this.state.userId, this.textarea.value);
 							} catch (error) {
 								if (error.message === ERRORS.ALREADY_SAVED) {
 									this.setState({ message: 'Данный текст уже отправлялся', isError: true });
@@ -57,7 +57,17 @@ export default class App extends Component {
 					<button
 						onClick={async () => {
 							this.setState({ message: 'Валидация текста...' });
-							const { id, name } = await validate(this.state.privateKey, this.textarea.value);
+							let id;
+							let name;
+							try {
+								({ id, name } = await validate(this.state.privateKey, this.textarea.value));
+							} catch (error) {
+								if (error.message === ERRORS.IS_FREE) {
+									this.setState({ message: 'Текст никому не принадлежит', okButton: true });
+									return;
+								}
+								throw error;
+							}
 							this.setState({
 								message: `Текст принадлежит аккаунту ${name} (1.2.${id})`,
 								okButton: true,
@@ -70,7 +80,9 @@ export default class App extends Component {
 						<div>
 							{this.state.message}
 							{this.state.okButton || this.state.isError ? (
-								<button onClick={() => this.setState({ message: null, isError: false })}>OK</button>
+								<button
+									onClick={() => this.setState({ message: null, okButton: false, isError: false })}
+								>OK</button>
 							) : null}
 						</div>
 					</div>
