@@ -1,0 +1,65 @@
+
+#app {
+	#profile {
+		position: fixed;
+		margin-top: 32px;
+		width: calc(100vw - 32px);
+		text-align: right;
+
+		#user-id {
+			font-size: 20px;
+			color: #606060;
+		}
+	}
+
+	#main {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		&>* {
+			margin: 16px;
+		}
+
+		&>textarea {
+			width: 512px;
+			height: 256px;
+			background-color: #606060;
+			border-color: #909090;
+			border-style: solid;
+			font-size: 20px;
+			color: white;
+		}
+	}
+
+	#modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: #000e;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		&.error {
+			color: #e83030;
+		}
+
+		&>div {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			background-color: #303030;
+			padding: 64px;
+			border-radius: 128px;
+			&>button {
+				margin-top: 32px;
+			}
+		}
+	}
+}

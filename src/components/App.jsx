@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Connection from './Connection';
-import { connect } from '../actions';
+import { connect, send, ERRORS, validate } from '../actions';
 import Login from './Login';
 
 export default class App extends Component {
@@ -13,6 +13,9 @@ export default class App extends Component {
 			privateKey: null,
 			userId: null,
 			userName: null,
+			message: null,
+			isError: false,
+			okButton: false,
 		};
 	}
 
@@ -28,7 +31,52 @@ export default class App extends Component {
 				<Login onLogged={(privateKey, userId, userName) => this.setState({ privateKey, userId, userName })} />
 			);
 		}
-		return <div>qwe</div>;
+		return (
+			<div id="app">
+				<div id="profile">
+					<div id="user-name">{this.state.userName}</div>
+					<div id="user-id">1.2.{this.state.userId}</div>
+				</div>
+				<div id="main">
+					<textarea ref={(node) => this.textarea = node} />
+					<button
+						onClick={async () => {
+							this.setState({ message: 'Отправка хэша в блокчейн...' });
+							try {
+								await send(this.state.privateKey, this.textarea.value);
+							} catch (error) {
+								if (error.message === ERRORS.ALREADY_SAVED) {
+									this.setState({ message: 'Данный текст уже отправлялся', isError: true });
+									return;
+								}
+								throw error;
+							}
+							this.setState({ okButton: true, message: 'Успешно отправлено' });
+						}}
+					>Отправить</button>
+					<button
+						onClick={async () => {
+							this.setState({ message: 'Валидация текста...' });
+							const { id, name } = await validate(this.state.privateKey, this.textarea.value);
+							this.setState({
+								message: `Текст принадлежит аккаунту ${name} (1.2.${id})`,
+								okButton: true,
+							});
+						}}
+					>Проверить</button>
+				</div>
+				{this.state.message ? (
+					<div id="modal" className={this.state.isError ? 'error' : ''}>
+						<div>
+							{this.state.message}
+							{this.state.okButton || this.state.isError ? (
+								<button onClick={() => this.setState({ message: null, isError: false })}>OK</button>
+							) : null}
+						</div>
+					</div>
+				) : null}
+			</div>
+		);
 	}
 
 }
