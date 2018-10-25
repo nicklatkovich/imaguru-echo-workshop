@@ -29,11 +29,11 @@ export async function login(wif) {
 	return { id: Number.parseInt(userId.split('.')[2]), name: userName };
 }
 
-export async function send(privateKey, accountId, text) {
+export async function send(privateKey, userId, text) {
 	const hash = sha3(text);
 	const transaction = new TransactionBuilder();
 	transaction.add_type_operation('contract', {
-		registrar: `1.2.${accountId}`,
+		registrar: `1.2.${userId}`,
 		receiver: contractId,
 		asset_id: '1.3.0',
 		value: 0,
