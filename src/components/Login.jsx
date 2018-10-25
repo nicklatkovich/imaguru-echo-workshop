@@ -63,7 +63,7 @@ export default class Login extends Component {
 							const unknownErrorMessage = 'Неизвестная ошибка';
 							const errorMessage = {
 									[ERRORS.INVALID_PRIVATE_KEY]: 'Приватный ключ введен неверно',
-									'Non-base58 character': 'Неверный формат приватного ключа',
+									[ERRORS.INVALID_PRIVATE_KEY_FORMAT]: 'Неверный формат приватного ключа',
 								}[error.message] || unknownErrorMessage;
 							this.setState({ error: errorMessage, processing: false });
 							if (errorMessage === unknownErrorMessage) throw error;
