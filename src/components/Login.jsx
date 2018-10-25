@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 import { login, ERRORS } from '../actions';
 
-/** @augments {Component<{onLogged: function(privateKey, userId:Number)}>} */
+/** @augments {Component<{onLogged: function(privateKey, userId:Number, userName:String)}>} */
 export default class Login extends Component {
 
 	constructor(...args) {
@@ -54,8 +54,8 @@ export default class Login extends Component {
 						this.submitButton.disabled = true;
 						this.setState({ processing: true });
 						try {
-							const userId = await login(this.wifInput.value);
-							this.props.onLogged(PrivateKey.fromWif(this.wifInput.value), userId);
+							const { id, name } = await login(this.wifInput.value);
+							this.props.onLogged(PrivateKey.fromWif(this.wifInput.value), id, name);
 						} catch (error) {
 							this.wifInput.disabled = false;
 							this.submitButton.disabled = false;

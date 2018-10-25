@@ -18,5 +18,5 @@ export async function login(wif) {
 	}
 	await new Promise((resolve) => setTimeout(() => resolve(), 2000));
 	if (wif[1] === 'J') throw new Error(ERRORS.INVALID_PRIVATE_KEY);
-	return Math.floor(Math.random() * 500);
+	return { id: Math.floor(Math.random() * 500), name: 'accountName' };
 }
